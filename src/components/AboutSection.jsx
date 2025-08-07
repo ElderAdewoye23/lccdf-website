@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function AboutSection() {
 
@@ -70,9 +71,12 @@ function AboutSection() {
         </div>
 
         <div className="text-center mt-12">
-          <a href="/about" className="inline-block bg-primary text-white px-8 py-3.5 rounded-lg hover:bg-accent transform hover:-translate-y-0.5 transition-all duration-200 font-semibold shadow-sm hover:shadow-md">
+          <Link 
+            to="/about" 
+            className="inline-block bg-primary text-white px-8 py-3.5 rounded-lg hover:bg-accent transform hover:-translate-y-0.5 transition-all duration-200 font-semibold shadow-sm hover:shadow-md"
+          >
             Learn More About Us
-          </a>
+          </Link>
         </div>
       </div>
     </section>

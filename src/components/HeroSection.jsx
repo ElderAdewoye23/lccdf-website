@@ -1,6 +1,7 @@
 
 import React from 'react'
 import Hero from '/images/Ngo.avif';
+import { Link } from 'react-router-dom';
 function HeroSection() {
   return (
     <section className="overflow-hidden bg-white py-24">
@@ -14,12 +15,18 @@ function HeroSection() {
             Living Care Community Development Foundation (LCCDF) empowers underserved communities in Nigeria through healthcare, education, and advocacy.
           </p>
           <div className="space-x-4">
-            <a href="/contact" className="inline-block bg-primary text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow-md">
+            <Link 
+              to="/contact" 
+              className="inline-block bg-primary text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-accent transform hover:-translate-y-0.5 transition-all duration-200 shadow-sm hover:shadow-md"
+            >
               Get Involved
-            </a>
-            <a href="/about" className="inline-block border-2 border-primary text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-primary hover:text-white transition-all duration-200">
+            </Link>
+            <Link 
+              to="/about" 
+              className="inline-block border-2 border-primary text-primary font-semibold px-8 py-3.5 rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
+            >
               Learn More
-            </a>
+            </Link>
           </div>
         </div>
 
