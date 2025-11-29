@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaProjectDiagram } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+
+
 
 function Projects({ filteredProjects }) {
   const [showDetails, setShowDetails] = useState(null);
@@ -57,8 +59,7 @@ function Projects({ filteredProjects }) {
                 {project.position}
               </p>
               <p className="font-body text-gray-700">
-                <span className="font-semibold text-gray-900">Value:</span>{" "}
-                {project.value} |{" "}
+                
                 <span className="font-semibold text-gray-900">Length:</span>{" "}
                 {project.length}
               </p>

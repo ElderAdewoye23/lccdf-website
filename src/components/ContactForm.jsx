@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import { contactSchema } from "../data/schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import emailjs from "@emailjs/browser";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 
 function ContactForm() {
   const [status, setStatus] = useState(null);
@@ -52,7 +54,7 @@ function ContactForm() {
         Send Us a Message
       </h3>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-        {["fullName", "email", "subject"].map((field, idx) => (
+        {["fullName", "email", "subject"].map((field) => (
           <motion.div key={field} whileFocus={{ scale: 1.02 }} transition={{ duration: 0.2 }}>
             <input
               type={field === "email" ? "email" : "text"}
