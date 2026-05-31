@@ -1,22 +1,42 @@
 import React from "react";
 import { boardOfTrustees } from "../data/data";
 import { motion } from "framer-motion";
+import { Phone, Briefcase, Award, User } from "lucide-react";
+
+// Helper to get initials and corresponding gradient color
+function getAvatarFallback(name) {
+  const clean = name.replace(/^(mr\.|mrs\.|dr\.)\s+/i, "").trim();
+  const parts = clean.split(/\s+/);
+  const initials = (parts[0]?.[0] || "") + (parts[1]?.[0] || "");
+  
+  const code = clean.charCodeAt(0) + clean.charCodeAt(clean.length - 1);
+  const gradients = [
+    "from-slate-700 to-slate-900 text-slate-100",
+    "from-emerald-800 to-emerald-950 text-emerald-100",
+    "from-indigo-800 to-indigo-950 text-indigo-100",
+    "from-teal-800 to-teal-950 text-teal-100",
+  ];
+  
+  return {
+    initials: initials.toUpperCase().slice(0, 2),
+    gradient: gradients[code % gradients.length]
+  };
+}
 
 function Trustees() {
   const container = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: 0.2 }, // delays each card slightly
+      transition: { staggerChildren: 0.1 },
     },
   };
 
   const card = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
+    hidden: { opacity: 0, y: 25 },
     visible: {
       opacity: 1,
       y: 0,
-      scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
@@ -24,34 +44,68 @@ function Trustees() {
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.05 }}
       variants={container}
+      className="space-y-6"
     >
       <motion.h3
         variants={card}
-        className="text-xl font-heading text-primary mb-4"
+        className="text-2xl font-heading font-bold text-slate-800 flex items-center gap-3"
       >
+        <span className="w-1.5 h-6 bg-gold rounded-full inline-block" />
         Board of Trustees
       </motion.h3>
 
-      <motion.ul
+      <motion.div
         variants={container}
-        className="grid md:grid-cols-2 gap-4 text-sm"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
-        {boardOfTrustees.map((member) => (
-          <motion.li
-            key={member.id}
-            variants={card}
-            className="border p-4 rounded shadow bg-white"
-          >
-            <p>
-              <strong>{member.name}</strong> - {member.position}
-            </p>
-            <p>{member.profession}</p>
-            <p className="text-gray-600">Contact: {member.contact}</p>
-          </motion.li>
-        ))}
-      </motion.ul>
+        {boardOfTrustees.map((member) => {
+          const fallback = getAvatarFallback(member.name);
+          return (
+            <motion.div
+              key={member.id}
+              variants={card}
+              whileHover={{ y: -3 }}
+              className="group border border-slate-100 p-5 rounded-2xl shadow-sm hover:shadow-md bg-white transition-all duration-300 flex items-start gap-5 relative overflow-hidden"
+            >
+              {/* Left-accent border */}
+              <div className="absolute top-0 left-0 h-full w-1 bg-gold" />
+              
+              {/* Circular Initials Avatar */}
+              <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${fallback.gradient} flex items-center justify-center shadow-sm shrink-0 select-none`}>
+                <span className="text-base font-heading font-extrabold tracking-wider leading-none">
+                  {fallback.initials || <User size={20} />}
+                </span>
+              </div>
+
+              {/* Trustee Information */}
+              <div className="space-y-2 flex-grow min-w-0">
+                <div className="space-y-0.5">
+                  <h4 className="font-heading font-extrabold text-slate-800 text-sm leading-tight truncate">
+                    {member.name}
+                  </h4>
+                  <p className="text-xs font-heading font-bold text-slate-400 uppercase tracking-wider">
+                    {member.position}
+                  </p>
+                </div>
+                
+                {/* Details layout */}
+                <div className="space-y-1 pt-1 font-body text-xs text-slate-500">
+                  <div className="flex items-center gap-2">
+                    <Briefcase size={12} className="text-slate-400 shrink-0" />
+                    <span className="truncate">{member.profession}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone size={12} className="text-slate-400 shrink-0" />
+                    <span>{member.contact}</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
     </motion.div>
   );
 }
